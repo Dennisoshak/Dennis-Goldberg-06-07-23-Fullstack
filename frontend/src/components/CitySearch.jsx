@@ -1,29 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-import axios from "axios";
+import { autoCompleteSearch, getWeatherByCity } from "./servises";
 
 
 
-const CitySearch = () => {
+const CitySearch = ({setWeather,setCity}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [cities, setCities] = useState([]);
 
-  const baseURL =
-  "http://localhost:8000/";
-
-
-  const autoCompleteSearch = async () => {
-    if (!searchQuery) return
-    try {
-      
-      const response = await axios.get(`${baseURL}autocomplete/${searchQuery}`)
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
   const handleInputChange = (event) => {
     const str = event.target.value;
@@ -33,13 +18,18 @@ const CitySearch = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const result = await autoCompleteSearch();
+      const result = await autoCompleteSearch(searchQuery);
      setSearchResults(result)
     };
   
   fetchData()
-    console.log(searchResults)
   }, [searchQuery]);
+
+  const handleCitySelection =async(key,cityName) => {
+  const response = await getWeatherByCity(key)
+ setWeather(response)
+ setCity(cityName)
+  }
 
   return (
     <div className="main">
@@ -61,7 +51,7 @@ const CitySearch = () => {
       <div className="list-container">
         <ul className="cities-list">
           {searchResults && searchResults.map((city, index) => (
-            <li key={city.key}>{city.LocalizedName}</li>
+            <li key={city.key} onClick={()=>handleCitySelection(city.Key,city.LocalizedName)}>{city.LocalizedName}</li>
           ))}
         </ul>
       </div>

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const {getWeatherbycity} = require('../controllers/getWeather')
 
 
 router.post('/weather', (req, res) => {
@@ -19,12 +19,13 @@ router.post('/weather', (req, res) => {
     });
   });
 
-router.get('/:city', (req, res) => {
+router.get('/:city', async(req, res) => {
   const { city } = req.params;
 
+const data = await getWeatherbycity(city)
 
 
-  res.status(200).json({ city, temperature, condition });
+  res.status(200).json(data);
 });
 
 module.exports = router;
