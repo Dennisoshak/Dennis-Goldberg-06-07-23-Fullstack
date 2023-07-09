@@ -20,9 +20,11 @@ app.use(express.json());
 
 const weatherRoutes = require('./routes/weatherRoutes');
 const favoritesRoutes = require('./routes/favoritesRoutes');
+const autocompleteRoutes = require('./routes/autocompleteRoutes')
 
 app.use('/weather', weatherRoutes);
 app.use('/favorites', favoritesRoutes);
+app.use('/autocomplete', autocompleteRoutes);
 
 
 
