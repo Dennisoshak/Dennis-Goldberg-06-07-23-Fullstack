@@ -8,12 +8,14 @@ const CitySearch = ({ setWeather, setCity }) => {
 
   const handleInputChange = (event) => {
     const str = event.target.value;
+   
     setSearchQuery(str);
   };
   useEffect(() => {
     const fetchData = async () => {
       const result = await autoCompleteSearch(searchQuery);
       setSearchResults(result);
+      
     };
 
     fetchData();
@@ -24,7 +26,7 @@ const CitySearch = ({ setWeather, setCity }) => {
     setWeather(response);
     setCity(cityData);
   };
-
+const cities = ["dds","ddt"]
   return (
     <div className="main">
       <div className="form">

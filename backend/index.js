@@ -5,12 +5,6 @@ const cors = require('cors');
 const PORT = 8000;
 
 
-const pool = mysql.createPool({
-    host: 'localhost:3306',
-    user: 'dennis',
-    password: 'Ella@2017',
-    database: 'weather',
-  });
 
 app.use(cors({
     origin: 'http://localhost:3000',

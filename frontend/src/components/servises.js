@@ -9,7 +9,6 @@ export const autoCompleteSearch = async (query) => {
   try {
     
     const response = await axios.get(`${baseURL}autocomplete/${query}`)
-    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -26,3 +25,18 @@ export const getWeatherByCity = async(key) => {
         console.log(error);
       }
 }
+
+export const saveToFavorites = async (userId, city) => {
+  console.log("post")
+  try {
+    
+    const response = await axios.post(`${baseURL}favorites`, {
+      userId: userId,
+      city: city
+    });
+    console.log('Favorite city posted successfully');
+    return response
+  } catch (error) {
+    console.error('Error posting favorite city:', error);
+  }
+};
