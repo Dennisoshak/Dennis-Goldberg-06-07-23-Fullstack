@@ -5,8 +5,8 @@ import { saveToFavorites } from "./servises";
 const Home = ({ weather, city, user }) => {
   console.log(weather);
   const temperature = weather.Temperature?.Metric.Value;
-  const { key, LocalizedName } = city;
-
+  const { Key, LocalizedName } = city;
+  console.log(city);
   return (
     <>
       {temperature && (
@@ -14,7 +14,8 @@ const Home = ({ weather, city, user }) => {
           <span className="weather-item">{LocalizedName} </span>
           <span className="weather-item">{temperature}C</span>
           <span className="weather-item"> {weather.WeatherText}</span>
-          <button onClick={() => saveToFavorites(user.user_id, city)}>
+          <button
+            onClick={() => saveToFavorites(user.user_id, LocalizedName, Key)}>
             <span className="heart">♥</span> add to favorites
           </button>
         </div>

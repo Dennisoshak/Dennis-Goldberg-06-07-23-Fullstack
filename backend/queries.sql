@@ -12,3 +12,8 @@ CREATE TABLE favorites (
   user_id INT,
   city JSON
 );
+ALTER TABLE favorites
+DROP COLUMN city;
+ALTER TABLE favorites
+ADD cityName VARCHAR(100) NOT NULL,
+ADD cityKey VARCHAR(100) NOT NULL;

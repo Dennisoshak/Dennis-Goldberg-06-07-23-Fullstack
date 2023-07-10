@@ -16,20 +16,23 @@ import { useEffect, useState } from "react";
 function App() {
   const [weather, setWeather] = useState([]);
   const [city, setCity] = useState("");
-  const [user,setUser] = useState({})
+  const [user, setUser] = useState({ name: "dennis", user_id: 1 });
   return (
     <BrowserRouter>
       <ChakraProvider>
         <div className="App">
-          <Header setUser={setUser}/>
+          <Header setUser={setUser} />
           <CitySearch setWeather={setWeather} setCity={setCity} />
 
           <Routes>
             <Route
               path="/"
-              element={<Home weather={weather} city={city} user={user} />}
-            ></Route>
-            <Route path="/favorites" element={<Favorites user={user}/>}></Route>
+              element={
+                <Home weather={weather} city={city} user={user} />
+              }></Route>
+            <Route
+              path="/favorites"
+              element={<Favorites user={user} />}></Route>
           </Routes>
         </div>
       </ChakraProvider>
