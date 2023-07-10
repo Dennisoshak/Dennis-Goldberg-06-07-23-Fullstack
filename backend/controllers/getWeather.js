@@ -18,8 +18,9 @@ const saveWeatherToDatabase = (locationKey, temperature, conditions) => {
     pool.query(query, [locationKey, temperature, conditions], (error, results) => {
 
       if (error) {
-        console.error("Error saving weather data to database:", error);
-        throw error;
+        console.error( error.response.data.Message);
+        
+
       }
 
       console.log("Weather data saved to database");
@@ -29,8 +30,10 @@ const saveWeatherToDatabase = (locationKey, temperature, conditions) => {
 
 const getWeatherByCity = async (locationKey) => {
   try {
-    const apiKey = "q5F6SApntAgVmAyHDaQQdSSdOLzLNBFu"
+    // const apiKey = "q5F6SApntAgVmAyHDaQQdSSdOLzLNBFu"
     // const apiKey = "ZHwilvfWlb6H0E9AQIyQDosCiACHp2Up";
+    const apiKey ="	LnGOsntZjl9AAlSTXmOeNzN34GyLORNQ"
+
 
     const response = await axios.get(
       `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}`
