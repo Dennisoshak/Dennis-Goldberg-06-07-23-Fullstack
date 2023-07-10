@@ -7,10 +7,9 @@
 ul {
   list-style-type: none;
   margin-top: 3rem;
-
 }
 li {
-  padding:6px 0;
+  padding: 6px 0;
   cursor: pointer;
 }
 li:hover {
@@ -47,13 +46,13 @@ li:hover {
   font-size: 16px;
   font-weight: 700;
 }
-.weather-details{
+.weather-details {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
   width: 50%;
   font-size: 19px;
 }
-.weather-item{
+.weather-item {
   margin: 1rem;
 }

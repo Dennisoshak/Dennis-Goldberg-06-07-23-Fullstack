@@ -1,44 +1,46 @@
 const axios = require("axios");
-const {pool} = require('../db')
+const { pool } = require("../db");
 
-const saveWeatherToDatabase = (weatherData,locationKey) => {
-  const conditions = weatherData.DataWeatherText
-  const temperature = weatherData.Temperature.Metric.Value
-  const query = `INSERT INTO weather_data (locationKey, temperature, condition) VALUES (${locationKey},${temperature},${conditions})`;
+const saveWeatherToDatabase = (weatherData, locationKey) => {
+  const conditions = weatherData.WeatherText;
+  const temperature = weatherData.Temperature.Metric.Value;
+  const query = `INSERT INTO weather_data (locationKey, temperature, conditions) VALUES (${locationKey},${temperature},${conditions})`;
 
   pool.getConnection((err, connection) => {
     if (err) {
-      console.error('Error establishing database connection:', err);
+      console.error("Error establishing database connection:", err);
       throw err;
     }
 
-    connection.query(query, [locationKey, city, temperature, condition], (error, results) => {
-      connection.release();
+    connection.query(
+      query,
+      [locationKey, city, temperature, conditions],
+      (error, results) => {
+        connection.release();
 
-      if (error) {
-        console.error('Error saving weather data to database:', error);
-        throw error;
+        if (error) {
+          console.error("Error saving weather data to database:", error);
+          throw error;
+        }
+
+        console.log("Weather data saved to database");
       }
-
-      console.log('Weather data saved to database');
-    });
+    );
   });
 };
 
-
-const getWeatherbycity = async (locationKey) => {
+const getWeatherByCity = async (locationKey) => {
   try {
     // const apiKey = "q5F6SApntAgVmAyHDaQQdSSdOLzLNBFu"
-    const apiKey = "	ZHwilvfWlb6H0E9AQIyQDosCiACHp2Up"
- 
+    const apiKey = "ZHwilvfWlb6H0E9AQIyQDosCiACHp2Up";
+
     const response = await axios.get(
       `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}`
     );
 
     const weatherData = response.data[0];
-
-    saveWeatherToDatabase(weatherData,locationKey);
-
+    // saveWeatherToDatabase(weatherData, locationKey);
+    return weatherData;
   } catch (error) {
     console.error("Error fetching  results:", error);
     throw new Error("Failed to fetch  results");
@@ -46,6 +48,6 @@ const getWeatherbycity = async (locationKey) => {
 };
 
 module.exports = {
-  getWeatherbycity,
-  saveWeatherToDatabase
+  getWeatherByCity,
+  saveWeatherToDatabase,
 };
