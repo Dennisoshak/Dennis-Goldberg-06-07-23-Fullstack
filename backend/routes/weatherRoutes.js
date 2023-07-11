@@ -19,11 +19,13 @@ router.post("/weather", (req, res) => {
 });
 
 router.get("/:city", async (req, res) => {
-  const { city } = req.params;
-
-  const data = await getWeatherByCity(city);
-
-  res.status(200).json(data);
+  try {
+    const { city } = req.params;
+    const data = await getWeatherByCity(city);
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 module.exports = router;

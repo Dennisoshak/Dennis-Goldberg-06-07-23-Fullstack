@@ -5,8 +5,13 @@ import { Select } from "@chakra-ui/react";
 const Header = ({setUser}) => {
   const users = [
     {name:"Dennis",user_id:1},
-    {name:"John",user_id:2}
+    {name:"John",user_id:2},
+    {name:"Jane",user_id:3}
   ]
+  const handleClick = (e) => {
+    
+    setUser(()=>users[e.target.value])
+  }
   return (
     <div className="header">
       <Link to="/" className="nav-item">
@@ -17,9 +22,10 @@ const Header = ({setUser}) => {
       </Link>
 
       <span className="user-select">
-        <Select placeholder="Select user" width="10rem">
-         {users.map((user)=>(
-          <option onClick={()=>setUser(user)}>{user.name}</option>
+        <Select  width="10rem" onChange={(e)=>{handleClick(e)}}>
+          <option selected disabled>Select User</option>
+         {users.map((user,i)=>(
+          <option onClick={()=>handleClick(user)}value={i}>{user.name}</option>
          ))}
         </Select>
       </span>

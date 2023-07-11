@@ -1,8 +1,8 @@
 CREATE TABLE weather_data (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  city VARCHAR(255) NOT NULL,
+  city VARCHAR(100) NOT NULL,
   temperature FLOAT NOT NULL,
-  conditions VARCHAR(255) NOT NULL
+  conditions VARCHAR(100) NOT NULL
 );
 CREATE TABLE users (
   user_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -10,10 +10,6 @@ CREATE TABLE users (
 );
 CREATE TABLE favorites (
   user_id INT,
-  city JSON
+  cityName VARCHAR(100) NOT NULL,
+  cityKey VARCHAR(100) NOT NULL;
 );
-ALTER TABLE favorites
-DROP COLUMN city;
-ALTER TABLE favorites
-ADD cityName VARCHAR(100) NOT NULL,
-ADD cityKey VARCHAR(100) NOT NULL;
