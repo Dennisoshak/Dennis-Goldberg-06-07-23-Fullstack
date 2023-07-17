@@ -3,33 +3,39 @@ const router = express.Router();
 const {
   addFavoriteCity,
   getFavoriteCities,
+  deleteFavorite,
 } = require("../controllers/favorites");
 
-router.get("/:userId", (req, res) => {
-  const { userId, city } = req.body;
-
-  res.status(200).json({ userId, favorites });
-});
-
 router.post("/:userId", (req, res) => {
-  const { cityName, cityKey } = req.body;
-  const { userId } = req.params;
+  try {
+    const { cityName, cityKey } = req.body;
+    const { userId } = req.params;
 
-  addFavoriteCity(userId, cityName, cityKey);
-
-  res.status(200).json({ message: "Favorites saved successfully" });
-});
-
-router.delete("/:userId/:city", (req, res) => {
-  const { userId, city } = req.params;
-
-  res.status(200).json({ message: "Favorite deleted successfully" });
+   const result =  addFavoriteCity(userId, cityName, cityKey);
+    res.status(200).json({ message: "Favorites saved successfully" });
+  } catch (error) {
+    console.error("Failed to save favorites", error);
+  }
 });
 
 router.get("/:userId", async (req, res) => {
-  const { userId } = req.params;
-  const favorites = getFavoriteCities(userId);
-  res.status(200).json(favorites);
+  try {
+    const { userId } = req.params;
+    const favorites = await getFavoriteCities(userId);
+    res.status(200).json(favorites);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.delete("/:userId/:cityKey", async (req, res) => {
+  try {
+    const { userId, cityKey } = req.params;
+    const result = await deleteFavorite(userId, cityKey);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Failed to delete", error);
+  }
 });
 
 module.exports = router;

@@ -11,6 +11,8 @@ ul {
 li {
   padding: 6px 0;
   cursor: pointer;
+  text-align: start;
+  font-size: 18px;
 }
 li:hover {
   background-color: aliceblue;
@@ -43,7 +45,7 @@ li:hover {
 }
 .nav-item {
   margin: 0 3rem;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
 }
 .weather-details {
@@ -55,4 +57,14 @@ li:hover {
 }
 .weather-item {
   margin: 1rem;
+}
+.favorite-btn{
+  font-size: 13px;
+}
+.favorite-btn:hover {
+  transform: scale(1.1);
+}
+.favories-heading{
+  width: 50%;
+  font-size: 20px;
 }

@@ -1,39 +1,64 @@
 const mysql = require("mysql2");
 
+const user = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
+
 const pool = mysql.createPool({
   host: "localhost",
-  user: "root",
-  password: "abc999666",
+  user: user,
+  password: password,
   database: "weather",
   port: 3306,
 });
 
-const addFavoriteCity = (userId, cityName, cityKey) => {
-  const query = `INSERT INTO favorites (user_id, cityName,cityKey) VALUES (?, ?,?)`;
+const addFavoriteCity = async (userId, cityName, cityKey) => {
+  const checkQuery = `SELECT * FROM favorites WHERE user_id = ? AND cityKey = ?`;
+  const insertQuery = `INSERT INTO favorites (user_id, cityName, cityKey) VALUES (?, ?, ?)`;
 
-  pool.query(query, [userId, cityName, cityKey], (error, results) => {
+  pool.query(checkQuery, [userId, cityKey], (error, results) => {
     if (error) {
-      console.error("Error saving favorite city:", error);
-      throw error;
+      console.error("Error checking favorite city:", error);
+      return;
     }
 
-    console.log("Favorite city inserted successfully");
+    if (results.length > 0) {
+      return "City already exists in favorites";
+    }
+
+    pool.query(insertQuery, [userId, cityName, cityKey], (error, results) => {
+      if (error) {
+        console.error("Error saving favorite city:", error);
+        return;
+      }
+      return "Favorite city saved";
+    });
   });
 };
 
 const getFavoriteCities = async (userId) => {
   try {
-    const query = "SELECT * FROM favorites WHERE userId = ?";
-    const [favorites, _] = pool.query(query, [userId]);
-    console.log("Favorites fetched successfully");
-    return favorites;
+    const query = "SELECT cityName, cityKey FROM favorites WHERE user_id = ?";
+    const [rows] = await pool.promise().query(query, [userId]);
+    return rows;
   } catch (error) {
-    console.error("Failed to fetch favorites:", error);
-    res.status(500).json({ error: "Failed to fetch favorites" });
+    console.error("Error fetching favorites:", error);
+    return [];
+  }
+};
+
+const deleteFavorite = async (userId, cityKey) => {
+  try {
+    const query = "DELETE FROM favorites WHERE user_id = ? AND cityKey = ?";
+    const [result] = await pool.promise().query(query, [userId, cityKey]);
+    return result.affectedRows;
+  } catch (error) {
+    console.error("Error deleting favorite:", error);
+    return [];
   }
 };
 
 module.exports = {
   addFavoriteCity,
   getFavoriteCities,
+  deleteFavorite,
 };

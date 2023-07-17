@@ -8,30 +8,46 @@ export const autoCompleteSearch = async (query) => {
     const response = await axios.get(`${baseURL}autocomplete/${query}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 export const getWeatherByCity = async (key) => {
   try {
     const response = await axios.get(`${baseURL}weather/${key}`);
-    console.log(response);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 export const saveToFavorites = async (userId, cityName, cityKey) => {
-  console.log("post");
   try {
     const response = await axios.post(`${baseURL}favorites/${userId}`, {
       cityName: cityName,
       cityKey: cityKey,
     });
-    console.log("Favorite city posted successfully");
     return response;
   } catch (error) {
     console.error("Error posting favorite city:", error);
   }
 };
+ 
+export const getFavoriteCities = async(userId) =>{
+    try {
+      const response = await axios.get(`${baseURL}favorites/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+      
+    }
+  }
+export const deleteFavorite =async (userId,cityKey)=>{
+  try {
+    const response = await axios.delete(`${baseURL}favorites/${userId}/${cityKey}`)
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching favorites:', error);
+    
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { autoCompleteSearch, getWeatherByCity } from "./servises";
+import { autoCompleteSearch, getWeatherByCity } from "../servises";
 
 const CitySearch = ({ setWeather, setCity }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,18 +28,20 @@ const CitySearch = ({ setWeather, setCity }) => {
   return (
     <div className="main">
       <div className="form">
-        <FormControl
-          width={"30%"}
+        <form
           onSubmit={(e) => {
             e.preventDefault();
-          }}>
-          <FormLabel>Search for a city</FormLabel>
-          <Input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => handleInputChange(e)}
-          />
-        </FormControl>
+          }}
+        >
+          <FormControl width={"30%"}>
+            <FormLabel>Search for a city</FormLabel>
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => handleInputChange(e)}
+            />
+          </FormControl>
+        </form>
       </div>
       <div className="list-container">
         <ul className="cities-list">
@@ -47,8 +49,11 @@ const CitySearch = ({ setWeather, setCity }) => {
             searchResults.map((city, index) => (
               <li
                 key={city.key}
-                onClick={() => handleCitySelection(city.Key, city)}>
+                onClick={() => handleCitySelection(city.Key, city)}
+              >
                 {city.LocalizedName}
+                {", "}
+                {city.Country.LocalizedName}
               </li>
             ))}
         </ul>
