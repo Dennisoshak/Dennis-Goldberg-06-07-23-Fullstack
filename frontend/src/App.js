@@ -1,17 +1,11 @@
 import "./App.css";
-import {
-  Routes,
-  Route,
-  Navigate,
-  Router,
-  BrowserRouter,
-} from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import CitySearch from "./components/CitySearch";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Favorites from "./components/Favorites";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function App() {
   const [weather, setWeather] = useState([]);
@@ -27,12 +21,12 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Home weather={weather} city={city} user={user} />}
-            ></Route>
+              element={
+                <Home weather={weather} city={city} user={user} />
+              }></Route>
             <Route
               path="/favorites"
-              element={<Favorites user={user} />}
-            ></Route>
+              element={<Favorites user={user} />}></Route>
           </Routes>
         </div>
       </ChakraProvider>

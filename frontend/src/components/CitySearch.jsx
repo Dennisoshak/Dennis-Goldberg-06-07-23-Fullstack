@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { autoCompleteSearch, getWeatherByCity } from "../servises";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const CitySearch = ({ setWeather, setCity }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInputChange = (event) => {
     const str = event.target.value;
@@ -24,6 +27,9 @@ const CitySearch = ({ setWeather, setCity }) => {
     const response = await getWeatherByCity(key);
     setWeather(response);
     setCity(cityData);
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
   };
   return (
     <div className="main">
@@ -31,8 +37,7 @@ const CitySearch = ({ setWeather, setCity }) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-          }}
-        >
+          }}>
           <FormControl width={"30%"}>
             <FormLabel>Search for a city</FormLabel>
             <Input
@@ -49,8 +54,7 @@ const CitySearch = ({ setWeather, setCity }) => {
             searchResults.map((city, index) => (
               <li
                 key={city.key}
-                onClick={() => handleCitySelection(city.Key, city)}
-              >
+                onClick={() => handleCitySelection(city.Key, city)}>
                 {city.LocalizedName}
                 {", "}
                 {city.Country.LocalizedName}
