@@ -24,7 +24,7 @@ const addFavoriteCity = (userId, cityName, cityKey) => {
 const getFavoriteCities = async (userId) => {
   try {
     const query = "SELECT * FROM favorites WHERE userId = ?";
-    const [favorites, _] = await pool.query(query, [userId]);
+    const [favorites, _] = pool.query(query, [userId]);
     console.log("Favorites fetched successfully");
     return favorites;
   } catch (error) {
