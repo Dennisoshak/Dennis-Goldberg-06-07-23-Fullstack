@@ -1,5 +1,6 @@
 const axios = require("axios");
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const apiKey = process.env.API_KEY;
 const user = process.env.DB_USER;

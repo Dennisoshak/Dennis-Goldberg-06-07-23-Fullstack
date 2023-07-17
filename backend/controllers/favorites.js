@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const user = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
