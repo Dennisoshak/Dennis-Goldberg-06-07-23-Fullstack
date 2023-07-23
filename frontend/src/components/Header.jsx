@@ -23,9 +23,9 @@ const Header = ({setUser}) => {
 
       <span className="user-select">
         <Select  width="10rem" onChange={(e)=>{handleClick(e)}}>
-          <option selected disabled>Select User</option>
+          <option defaultValue disabled>Select User</option>
          {users.map((user,i)=>(
-          <option onClick={()=>handleClick(user)}value={i}>{user.name}</option>
+          <option key={user.user_id} onClick={()=>handleClick(user)} value={i}>{user.name}</option>
          ))}
         </Select>
       </span>
