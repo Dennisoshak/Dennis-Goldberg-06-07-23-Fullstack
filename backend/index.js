@@ -22,5 +22,5 @@ app.use("/favorites", favoritesRoutes);
 app.use("/autocomplete", autocompleteRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`, password);
+  console.log(`Server is running on port ${PORT}`);
 });

@@ -1,7 +1,8 @@
 const axios = require("axios");
+require("dotenv").config();
+
 
 const apiKey = process.env.API_KEY;
-
 const autoCompleteSearch = async (query) => {
   try {
     const response = await axios.get(
